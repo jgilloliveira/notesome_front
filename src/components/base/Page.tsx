@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../css/styles.css'
 
-type PageProps = { children: JSX.Element }
+type PageProps = { children: JSX.Element | JSX.Element[] }
 
 export function Page({ children }: PageProps) {
 

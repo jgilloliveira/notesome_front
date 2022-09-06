@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "yurnei": "https://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@github.com/luismezaf/yurnei.git"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

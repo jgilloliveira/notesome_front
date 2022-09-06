@@ -734,3 +734,7 @@ vite@^3.0.7:
     rollup ">=2.75.6 <2.77.0 || ~2.77.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+"yurnei@https://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@github.com/luismezaf/yurnei.git":
+  version "0.5.18"
+  resolved "https://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@github.com/luismezaf/yurnei.git#74da759126c648cdbb48f163afa1e38ba6490399"

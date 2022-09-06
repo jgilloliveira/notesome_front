@@ -19,3 +19,59 @@
 .scroll, .scroll-x {
   overflow-x: scroll;
 }
+
+.flex, .row, .column {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+/* Paddings */
+.pl-xs, .pa-xs, .px-xs {padding-left: 2px;}
+.pl-sm, .pa-sm, .px-sm {padding-left: 4px;}
+.pl-md, .pa-md, .px-md {padding-left: 8px;}
+.pl-lg, .pa-lg, .px-lg {padding-left: 16px;}
+.pl-xl, .pa-xl, .px-xl {padding-left: 32px;}
+.pr-xs, .pa-xs, .px-xs {padding-right: 2px;}
+.pr-sm, .pa-sm, .px-sm {padding-right: 4px;}
+.pr-md, .pa-md, .px-md {padding-right: 8px;}
+.pr-lg, .pa-lg, .px-lg {padding-right: 16px;}
+.pr-xl, .pa-xl, .px-xl {padding-right: 32px;}
+.pt-xs, .pa-xs, .py-xs {padding-top: 2px;}
+.pt-sm, .pa-sm, .py-sm {padding-top: 4px;}
+.pt-md, .pa-md, .py-md {padding-top: 8px;}
+.pt-lg, .pa-lg, .py-lg {padding-top: 16px;}
+.pt-xl, .pa-xl, .py-xl {padding-top: 32px;}
+.pb-xs, .pa-xs, .py-xs {padding-bottom: 2px;}
+.pb-sm, .pa-sm, .py-sm {padding-bottom: 4px;}
+.pb-md, .pa-md, .py-md {padding-bottom: 8px;}
+.pb-lg, .pa-lg, .py-lg {padding-bottom: 16px;}
+.pb-xl, .pa-xl, .py-xl {padding-bottom: 32px;}
+
+/* Margins */
+.ml-xs, .ma-xs, .mx-xs {margin-left: 2px;}
+.ml-sm, .ma-sm, .mx-sm {margin-left: 4px;}
+.ml-md, .ma-md, .mx-md {margin-left: 8px;}
+.ml-lg, .ma-lg, .mx-lg {margin-left: 16px;}
+.ml-xl, .ma-xl, .mx-xl {margin-left: 32px;}
+.mr-xs, .ma-xs, .mx-xs {margin-right: 2px;}
+.mr-sm, .ma-sm, .mx-sm {margin-right: 4px;}
+.mr-md, .ma-md, .mx-md {margin-right: 8px;}
+.mr-lg, .ma-lg, .mx-lg {margin-right: 16px;}
+.mr-xl, .ma-xl, .mx-xl {margin-right: 32px;}
+.mt-xs, .ma-xs, .my-xs {margin-top: 2px;}
+.mt-sm, .ma-sm, .my-sm {margin-top: 4px;}
+.mt-md, .ma-md, .my-md {margin-top: 8px;}
+.mt-lg, .ma-lg, .my-lg {margin-top: 16px;}
+.mt-xl, .ma-xl, .my-xl {margin-top: 32px;}
+.mb-xs, .ma-xs, .my-xs {margin-bottom: 2px;}
+.mb-sm, .ma-sm, .my-sm {margin-bottom: 4px;}
+.mb-md, .ma-md, .my-md {margin-bottom: 8px;}
+.mb-lg, .ma-lg, .my-lg {margin-bottom: 16px;}
+.mb-xl, .ma-xl, .my-xl {margin-bottom: 32px;}
