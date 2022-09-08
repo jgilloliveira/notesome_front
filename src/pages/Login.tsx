@@ -7,12 +7,14 @@ export function Login() {
   const [password, setPassword] = useState('')
 
   return (
-    <Page>
-      <Input value={username} onChange={setUsername}/>
-      <Input value={password} onChange={setPassword} type='password'/>
-      <Button>
-        Login
-      </Button>
+    <Page className='bg-primary'>
+      <div className='bg-white rounded-border-sm column pa-lg'>
+        <Input value={username} onChange={setUsername}/>
+        <Input value={password} onChange={setPassword} type='password'/>
+        <Button>
+          Login
+        </Button>
+      </div>
     </Page>
   )
 }

@@ -1,4 +1,6 @@
-
+:root {
+  --primary: black;
+}
 
 .full-screen, .full-screen-x {
   width: 100vw;
@@ -10,6 +12,22 @@
 
 .bg-red {
   background-color: red;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-white {
+  color: white;
+}
+
+.text-red {
+  color: red;
 }
 
 .scroll, .scroll-y {
@@ -75,3 +93,33 @@
 .mb-md, .ma-md, .my-md {margin-bottom: 8px;}
 .mb-lg, .ma-lg, .my-lg {margin-bottom: 16px;}
 .mb-xl, .ma-xl, .my-xl {margin-bottom: 32px;}
+
+.no-border {
+  border: 0;
+
+}
+
+.no-border:focus {
+  outline: none;
+}
+
+.rounded-border-tl-xs, .rounded-border-t-xs, .rounded-border-l-xs, .rounded-border-xs {border-top-left-radius: 2px;}
+.rounded-border-tl-sm, .rounded-border-t-sm, .rounded-border-l-sm, .rounded-border-sm {border-top-left-radius: 4px;}
+.rounded-border-tl-md, .rounded-border-t-md, .rounded-border-l-md, .rounded-border-md {border-top-left-radius: 8px;}
+.rounded-border-tl-lg, .rounded-border-t-lg, .rounded-border-l-lg, .rounded-border-lg {border-top-left-radius: 16px;}
+.rounded-border-tl-xl, .rounded-border-t-xl, .rounded-border-l-xl, .rounded-border-xl {border-top-left-radius: 32px;}
+.rounded-border-tr-xs, .rounded-border-t-xs, .rounded-border-r-xs, .rounded-border-xs {border-top-right-radius: 2px;}
+.rounded-border-tr-sm, .rounded-border-t-sm, .rounded-border-r-sm, .rounded-border-sm {border-top-right-radius: 4px;}
+.rounded-border-tr-md, .rounded-border-t-md, .rounded-border-r-md, .rounded-border-md {border-top-right-radius: 8px;}
+.rounded-border-tr-lg, .rounded-border-t-lg, .rounded-border-r-lg, .rounded-border-lg {border-top-right-radius: 16px;}
+.rounded-border-tr-xl, .rounded-border-t-xl, .rounded-border-r-xl, .rounded-border-xl {border-top-right-radius: 32px;}
+.rounded-border-bl-xs, .rounded-border-b-xs, .rounded-border-l-xs, .rounded-border-xs {border-bottom-left-radius: 2px;}
+.rounded-border-bl-sm, .rounded-border-b-sm, .rounded-border-l-sm, .rounded-border-sm {border-bottom-left-radius: 4px;}
+.rounded-border-bl-md, .rounded-border-b-md, .rounded-border-l-md, .rounded-border-md {border-bottom-left-radius: 8px;}
+.rounded-border-bl-lg, .rounded-border-b-lg, .rounded-border-l-lg, .rounded-border-lg {border-bottom-left-radius: 16px;}
+.rounded-border-bl-xl, .rounded-border-b-xl, .rounded-border-l-xl, .rounded-border-xl {border-bottom-left-radius: 32px;}
+.rounded-border-br-xs, .rounded-border-b-xs, .rounded-border-r-xs, .rounded-border-xs {border-bottom-right-radius: 2px;}
+.rounded-border-br-sm, .rounded-border-b-sm, .rounded-border-r-sm, .rounded-border-sm {border-bottom-right-radius: 4px;}
+.rounded-border-br-md, .rounded-border-b-md, .rounded-border-r-md, .rounded-border-md {border-bottom-right-radius: 8px;}
+.rounded-border-br-lg, .rounded-border-b-lg, .rounded-border-r-lg, .rounded-border-lg {border-bottom-right-radius: 16px;}
+.rounded-border-br-xl, .rounded-border-b-xl, .rounded-border-r-xl, .rounded-border-xl {border-bottom-right-radius: 32px;}

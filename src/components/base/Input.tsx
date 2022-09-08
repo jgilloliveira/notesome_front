@@ -19,8 +19,7 @@ export function Input(props: InputParams) {
       placeholder={props.placeholder}
       value={props.value}
       onChange={({target})=>{props.onChange(target.value)}}
-      className='pa-md'
-      style={{border: '0'}}
+      className='pa-md no-border rounded-border-md'
     />
   )
 }
