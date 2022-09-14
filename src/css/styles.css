@@ -2,6 +2,10 @@
   --primary: black;
 }
 
+body {
+  margin: 0;
+}
+
 .full-screen, .full-screen-x {
   width: 100vw;
 }
@@ -30,12 +34,20 @@
   color: red;
 }
 
+.opacity-80-hover:hover {
+  opacity: 0.8;
+}
+
+.pointer {
+  cursor: pointer
+}
+
 .scroll, .scroll-y {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .scroll, .scroll-x {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .flex, .row, .column {
@@ -49,6 +61,9 @@
 .column {
   flex-direction: column;
 }
+
+.justify-center, .flex-center {justify-content: center;}
+.item-center, .flex-center {align-items: center;}
 
 /* Paddings */
 .pl-xs, .pa-xs, .px-xs {padding-left: 2px;}
@@ -94,6 +109,7 @@
 .mb-lg, .ma-lg, .my-lg {margin-bottom: 16px;}
 .mb-xl, .ma-xl, .my-xl {margin-bottom: 32px;}
 
+/* Borders */
 .no-border {
   border: 0;
 
@@ -123,3 +139,15 @@
 .rounded-border-br-md, .rounded-border-b-md, .rounded-border-r-md, .rounded-border-md {border-bottom-right-radius: 8px;}
 .rounded-border-br-lg, .rounded-border-b-lg, .rounded-border-r-lg, .rounded-border-lg {border-bottom-right-radius: 16px;}
 .rounded-border-br-xl, .rounded-border-b-xl, .rounded-border-r-xl, .rounded-border-xl {border-bottom-right-radius: 32px;}
+
+.bl-primary, .bo-primary {border-left: 1px solid var(--primary);}
+.br-primary, .bo-primary {border-right: 1px solid var(--primary);}
+.bt-primary, .bo-primary {border-top: 1px solid var(--primary);}
+.bb-primary, .bo-primary {border-bottom: 1px solid var(--primary);}
+
+/* Gap */
+.gap-xs { gap: 2px;}
+.gap-sm { gap: 4px;}
+.gap-md { gap: 8px;}
+.gap-lg { gap: 16px;}
+.gap-xl { gap: 32px;}

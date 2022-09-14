@@ -9,7 +9,7 @@ type PageProps = {
 export function Page({ children, className }: PageProps) {
 
   return (
-    <div className={`full-screen bg-red scroll ${className}`}>
+    <div className={`full-screen scroll ${className}`}>
       {children}
     </div>
   )
