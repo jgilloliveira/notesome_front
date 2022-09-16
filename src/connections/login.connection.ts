@@ -17,19 +17,37 @@ type LoginResponse = {
 
 type LoginResult = {
   data?: LoginResponse,
-  error?: any
+  error?: ErrorResponse<LoginModel>
 }
 
-export async function loginConnection(username: string, password: string): Promise<LoginResult> {
-  
-  const request = {
-    username,
-    password,
-  }
+type LoginModel = {
+  username: string, 
+  password: string
+}
 
+// Hace opcionales los atributos de T.
+type ErrorResponse<T> = {
+  [Key in keyof T]?: T[Key]
+} & {
+  error?: string
+}
+
+export async function loginConnection(request: LoginModel): Promise<LoginResult> {
+  
   try {
-    return await connection.post<LoginResponse>('users/login/', request)
-  } catch (error) {
-    return { error }
+    const { data } = await connection.post<LoginResponse>('users/login/', request)
+    localStorage.setItem('token', data.token)
+    connection.defaults.headers.common['Authorization'] = `Token ${data.token}`
+    return { data }
+  } catch (error: any) {
+
+    // Formateo del error que devuelve django.
+    for (const attr in error.response.data) {
+      const value = error.response.data[attr];
+      if(Array.isArray(value))
+        error.response.data[attr] = value[0]
+    }
+    
+    return { error: error.response.data }
   }
 }

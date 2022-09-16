@@ -8,7 +8,8 @@ export function Login() {
   const [password, setPassword] = useState('')
 
   async function handleLogin() {
-    const { data, error } = await loginConnection(username, password)
+    const { data, error } = await loginConnection({username, password})
+    
     console.log("Data:", data)
     console.log("Error:", error)
   }
