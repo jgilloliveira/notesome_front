@@ -145,6 +145,11 @@ body {
 .bt-primary, .bo-primary {border-top: 1px solid var(--primary);}
 .bb-primary, .bo-primary {border-bottom: 1px solid var(--primary);}
 
+.bl-red, .bo-red {border-left: 1px solid red;}
+.br-red, .bo-red {border-right: 1px solid red;}
+.bt-red, .bo-red {border-top: 1px solid red;}
+.bb-red, .bo-red {border-bottom: 1px solid red;}
+
 /* Gap */
 .gap-xs { gap: 2px;}
 .gap-sm { gap: 4px;}

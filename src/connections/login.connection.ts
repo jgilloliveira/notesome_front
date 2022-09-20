@@ -1,36 +1,6 @@
 import axios from "axios";
 import { connection } from "./axios.config";
-
-interface User {
-  id: number,
-  username: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  isActive: boolean
-}
-
-type LoginResponse = {
-  user: User,
-  token: string
-}
-
-type LoginResult = {
-  data?: LoginResponse,
-  error?: ErrorResponse<LoginModel>
-}
-
-type LoginModel = {
-  username: string, 
-  password: string
-}
-
-// Hace opcionales los atributos de T.
-type ErrorResponse<T> = {
-  [Key in keyof T]?: T[Key]
-} & {
-  error?: string
-}
+import { LoginModel, LoginResponse, LoginResult } from "./types.connections";
 
 export async function loginConnection(request: LoginModel): Promise<LoginResult> {
   
