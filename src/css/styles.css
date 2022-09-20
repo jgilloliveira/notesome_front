@@ -156,3 +156,57 @@ body {
 .gap-md { gap: 8px;}
 .gap-lg { gap: 16px;}
 .gap-xl { gap: 32px;}
+
+/* Typography*/
+.text-headline1 {
+  font-family: unquote("Roboto");
+  font-size: 96;
+}
+.text-headline2 {
+  font-family: unquote("Roboto");
+  font-size: 60;
+}
+.text-headline3 {
+  font-family: unquote("Roboto");
+  font-size: 48;
+}
+.text-headline4 {
+  font-family: unquote("Roboto");
+  font-size: 34;
+}
+.text-headline5 {
+  font-family: unquote("Roboto");
+  font-size: 24;
+}
+.text-headline6 {
+  font-family: unquote("Roboto");
+  font-size: 20;
+}
+.text-body1 {
+  font-family: unquote("Roboto");
+  font-size: 16;
+}
+.text-body2 {
+  font-family: unquote("Roboto");
+  font-size: 14;
+}
+.text-subtitle1 {
+  font-family: unquote("Roboto");
+  font-size: 16;
+}
+.text-subtitle2 {
+  font-family: unquote("Roboto");
+  font-size: 14;
+}
+.text-button {
+  font-family: unquote("Roboto");
+  font-size: 14;
+}
+.text-overline {
+  font-family: unquote("Roboto");
+  font-size: 10;
+}
+.text-caption {
+  font-family: unquote("Roboto");
+  font-size: 12;
+}
