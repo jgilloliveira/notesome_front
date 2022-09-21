@@ -21,9 +21,9 @@ export function Input(props: InputParams) {
         placeholder={props.placeholder}
         value={props.value}
         onChange={({target})=>{props.onChange(target.value)}}
-        className='pa-md no-border bb-primary'
+        className={`pa-md no-border ${ props.error? 'bb-red': 'bb-primary'}`}
       />
-      <div className='text-red bb-red'>{props.error}</div>
+      { props.error && <div className='text-red mt-xs text-caption'>{props.error}</div> }
     </div>
   )
 }

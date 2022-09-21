@@ -2,6 +2,10 @@
   --primary: black;
 }
 
+* {
+  font-family: sans-serif;
+}
+
 body {
   margin: 0;
 }
@@ -159,54 +163,41 @@ body {
 
 /* Typography*/
 .text-headline1 {
-  font-family: unquote("Roboto");
   font-size: 96;
 }
 .text-headline2 {
-  font-family: unquote("Roboto");
-  font-size: 60;
+  font-size: 60px;
 }
 .text-headline3 {
-  font-family: unquote("Roboto");
-  font-size: 48;
+  font-size: 48px;
 }
 .text-headline4 {
-  font-family: unquote("Roboto");
-  font-size: 34;
+  font-size: 34px;
 }
 .text-headline5 {
-  font-family: unquote("Roboto");
-  font-size: 24;
+  font-size: 24px;
 }
 .text-headline6 {
-  font-family: unquote("Roboto");
-  font-size: 20;
+  font-size: 20px;
 }
 .text-body1 {
-  font-family: unquote("Roboto");
-  font-size: 16;
+  font-size: 16px;
 }
 .text-body2 {
-  font-family: unquote("Roboto");
-  font-size: 14;
+  font-size: 14px;
 }
 .text-subtitle1 {
-  font-family: unquote("Roboto");
-  font-size: 16;
+  font-size: 16px;
 }
 .text-subtitle2 {
-  font-family: unquote("Roboto");
-  font-size: 14;
+  font-size: 14px;
 }
 .text-button {
-  font-family: unquote("Roboto");
-  font-size: 14;
+  font-size: 14px;
 }
 .text-overline {
-  font-family: unquote("Roboto");
-  font-size: 10;
+  font-size: 10px;
 }
 .text-caption {
-  font-family: unquote("Roboto");
-  font-size: 12;
+  font-size: 12px;
 }
