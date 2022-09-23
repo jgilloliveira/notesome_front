@@ -6,6 +6,7 @@ type InputParams = {
   type?: "text" | "password" | "number" | "email",
   value: string,
   error?: string,
+  label?: string,
   onChange: (value: string) => void 
 }
 
@@ -15,7 +16,8 @@ export function Input(props: InputParams) {
   const type = props.type || 'text'
 
   return (
-    <div>
+    <div className='column'>
+      { props.label && <div className='text-primary mb-xs text-caption'>{props.label}</div> }
       <input 
         type={type}
         placeholder={props.placeholder}

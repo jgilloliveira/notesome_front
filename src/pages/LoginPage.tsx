@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Page, Button, Input } from '../components/base'
-import { loginConnection } from '../connections/login.connection'
+import { loginConnection } from '../connections/session.connection'
 import { ErrorResponse, LoginModel } from '../connections/types.connections'
 import { useNavigate } from "react-router-dom";
 
