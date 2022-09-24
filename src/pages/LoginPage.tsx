@@ -22,7 +22,7 @@ export function LoginPage() {
     console.log("Error:", error)
   }
 
-  function handleOnChange(value: string, name: "username" | "password") {
+  function handleOnChange(value: string, name: keyof LoginModel) {
 
     if (name === 'username') setUsername(value)
     else if (name === 'password') setPassword(value)

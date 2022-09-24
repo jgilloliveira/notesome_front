@@ -7,6 +7,7 @@ type InputParams = {
   value: string,
   error?: string,
   label?: string,
+  disable?: boolean,
   onChange: (value: string) => void 
 }
 
@@ -24,6 +25,7 @@ export function Input(props: InputParams) {
         value={props.value}
         onChange={({target})=>{props.onChange(target.value)}}
         className={`pa-md no-border ${ props.error? 'bb-red': 'bb-primary'}`}
+        disabled={props.disable}
       />
       { props.error && <div className='text-red mt-xs text-caption'>{props.error}</div> }
     </div>
