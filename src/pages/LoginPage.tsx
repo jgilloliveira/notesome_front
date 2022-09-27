@@ -3,6 +3,7 @@ import { Page, Button, Input } from '../components/base'
 import { loginConnection } from '../connections/session.connection'
 import { ErrorResponse, LoginModel } from '../connections/types.connections'
 import { useNavigate } from "react-router-dom";
+import { SesionLayout } from '../layouts/SessionLayout';
 
 
 export function LoginPage() {
@@ -15,11 +16,9 @@ export function LoginPage() {
   async function handleLogin() {
     const { data, error } = await loginConnection({username, password})
 
-    if (error)
-      setError(error)
-
-    console.log("Data:", data)
-    console.log("Error:", error)
+    if (error) setError(error)
+    else navigate('/')
+    
   }
 
   function handleOnChange(value: string, name: keyof LoginModel) {
@@ -30,15 +29,17 @@ export function LoginPage() {
   }
 
   return (
-    <Page className='bg-primary flex-center flex'>
-      <div className='bg-white rounded-border-sm column pa-lg gap-lg'>
-        <h4>Login to your account</h4>
-        <Input value={username} placeholder="Nombre de usuario" error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
-        <Input value={password} placeholder="Contraseña" error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
-        <div className='text-red mt-xs text-caption'>{error.error}</div>
-        <Button onClick={handleLogin}>Login</Button>
-        <Button flat={true} onClick={() => navigate('/session/register')}>Create account</Button>
-      </div>
-    </Page>
+    <SesionLayout>
+      <Page>
+        <div className='bg-white rounded-border-sm column pa-lg gap-lg'>
+          <h4>Login to your account</h4>
+          <Input value={username} placeholder="Nombre de usuario" error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
+          <Input value={password} placeholder="Contraseña" error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
+          <div className='text-red mt-xs text-caption'>{error.error}</div>
+          <Button onClick={handleLogin}>Login</Button>
+          <Button flat={true} onClick={() => navigate('/session/register')}>Create account</Button>
+        </div>
+      </Page>
+    </SesionLayout>
   )
 }

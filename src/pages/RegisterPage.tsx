@@ -3,6 +3,7 @@ import { Page, Button, Input } from '../components/base'
 import { registerConnection } from '../connections/session.connection'
 import { ErrorResponse, LoginModel, RegisterModel } from '../connections/types.connections'
 import { useNavigate } from 'react-router-dom'
+import { SesionLayout } from '../layouts/SessionLayout'
 
 export function RegisterPage() {
   
@@ -46,32 +47,40 @@ export function RegisterPage() {
   }
 
   return (
-    <Page className='bg-primary flex-center flex'>
-      { 
-        registered? <RegisterSuccessful/>:
-
-        <div className='bg-white rounded-border-sm column pa-lg gap-lg'>
-          <h4>Register your new account</h4>
-          <Input value={register.username} label="Nombre de usuario" disable={loading} error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
-          <Input value={register.firstName} label="Nombre" disable={loading} error={error.firstName} onChange={(value) => handleOnChange(value, "firstName")}/>
-          <Input value={register.lastName} label="Apellido" disable={loading} error={error.lastName} onChange={(value) => handleOnChange(value, "lastName")}/>
-          <Input value={register.email} label="Email" disable={loading} error={error.email} onChange={(value) => handleOnChange(value, "email")} type='email' />
-          <Input value={register.password} label="Contraseña" disable={loading} error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
-          <Input value={register.confirmPass} label="Confermar contraseña" disable={loading} error={error.confirmPass} onChange={(value) => handleOnChange(value, "confirmPass")} type='password'/>
-          <div className='text-red mt-xs text-caption'>{error.error}</div>
-          <Button onClick={handleRegister}>{ loading? "Registrando": "Register"}</Button>
-          {/* TODO: Loader de corazoncito */}
-          <Button flat={true} onClick={() => navigate('/session/login')}>Login</Button>
-        </div>
-      }
-    </Page>
+    <SesionLayout>
+      <Page>
+        { 
+          registered
+          ? <RegisterSuccessful/>
+          : <div className='column gap-lg'>
+              <h4>Register your new account</h4>
+              <Input value={register.username} label="Nombre de usuario" disable={loading} error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
+              <Input value={register.firstName} label="Nombre" disable={loading} error={error.firstName} onChange={(value) => handleOnChange(value, "firstName")}/>
+              <Input value={register.lastName} label="Apellido" disable={loading} error={error.lastName} onChange={(value) => handleOnChange(value, "lastName")}/>
+              <Input value={register.email} label="Email" disable={loading} error={error.email} onChange={(value) => handleOnChange(value, "email")} type='email' />
+              <Input value={register.password} label="Contraseña" disable={loading} error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
+              <Input value={register.confirmPass} label="Confermar contraseña" disable={loading} error={error.confirmPass} onChange={(value) => handleOnChange(value, "confirmPass")} type='password'/>
+              <div className='text-red mt-xs text-caption'>{error.error}</div>
+              <Button onClick={handleRegister}>{ loading? "Registrando": "Register"}</Button>
+              {/* TODO: Loader de corazoncito */}
+              <Button flat={true} onClick={() => navigate('/session/login')}>Login</Button>
+            </div>
+        }
+      </Page>
+    </SesionLayout>
   )
 }
 
 function RegisterSuccessful() {
+
+  const navigate = useNavigate()
+
   return (
-    <div>
-      Registro completado!
-    </div>
+    <>
+      <div className=''>
+        Registro completado!
+      </div>
+      <Button onClick={() => navigate('/session/login')}>Inicia sesión</Button>
+    </>
   )
 }
