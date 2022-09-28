@@ -70,6 +70,14 @@ body {
   flex-direction: column;
 }
 
+.grow-1 {
+  flex-grow: 1;
+}
+
+.basis-0{
+  flex-basis: 0;
+}
+
 .justify-center, .flex-center {justify-content: center;}
 .item-center, .flex-center {align-items: center;}
 .justify-between {justify-content: space-between;}
@@ -158,6 +166,11 @@ body {
 .br-red, .bo-red {border-right: 1px solid red;}
 .bt-red, .bo-red {border-top: 1px solid red;}
 .bb-red, .bo-red {border-bottom: 1px solid red;}
+
+.bl-grey, .bo-grey {border-left: 1px solid grey;}
+.br-grey, .bo-grey {border-right: 1px solid grey;}
+.bt-grey, .bo-grey {border-top: 1px solid grey;}
+.bb-grey, .bo-grey {border-bottom: 1px solid grey;}
 
 /* Gap */
 .gap-xs { gap: 2px;}
