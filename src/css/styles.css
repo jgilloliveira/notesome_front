@@ -82,6 +82,15 @@ body {
 .item-center, .flex-center {align-items: center;}
 .justify-between {justify-content: space-between;}
 
+/* Positions */
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
 /* Paddings */
 .pl-xs, .pa-xs, .px-xs {padding-left: 2px;}
 .pl-sm, .pa-sm, .px-sm {padding-left: 4px;}

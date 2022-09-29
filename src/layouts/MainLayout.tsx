@@ -16,7 +16,6 @@ export function MainLayout(props: DivParams) {
         { openSidebar && <Sidebar/> }
         {props.children}
       </div>
-
     </Layout>
   )
 }
