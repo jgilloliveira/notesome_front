@@ -37,3 +37,8 @@ export async function registerConnection(request: RegisterModel): Promise<Regist
     return formatErrorResponse(error)
   }
 }
+
+export function logout() {
+  connection.defaults.headers.common['Authorization'] = ''
+  localStorage.removeItem('token')
+}

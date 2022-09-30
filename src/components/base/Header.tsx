@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { HeaderParams } from "../../types";
 import { Button } from "./Button";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../connections/session.connection";
+
 
 type HeaderProps = HeaderParams
 & {
@@ -11,7 +14,7 @@ type HeaderProps = HeaderParams
 export function Header(props: HeaderProps) {
 
   const [openUserMenu, setOpenUserMenu] = useState(false)
-  
+  const navigate = useNavigate()
 
   function onClickToggleSidebar() {
     props.setOpenSidebar(!props.openSidebar)
@@ -19,6 +22,11 @@ export function Header(props: HeaderProps) {
 
   function onClickUser(){
     setOpenUserMenu(!openUserMenu)
+  }
+
+  function onClickLogout(){
+    logout()
+    navigate('/session/login')
   }
 
   return (
@@ -34,7 +42,7 @@ export function Header(props: HeaderProps) {
               right: "0px",
               top:"100%"
             }}>
-              <Button flat={true}>Salir sesión</Button>
+              <Button flat={true} onClick={onClickLogout}>Salir sesión</Button>
           </div>
         }
       </div>
