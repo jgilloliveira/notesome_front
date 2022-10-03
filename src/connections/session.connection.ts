@@ -1,18 +1,6 @@
-import axios from "axios";
 import { connection } from "./axios.config";
 import { LoginModel, LoginResponse, LoginResult, RegisterModel, RegisterResponse, RegisterResult } from "./types.connections";
-
-function formatErrorResponse(error: any) {
-
-  // Formateo del error que devuelve django.
-  for (const attr in error.response.data) {
-    const value = error.response.data[attr];
-    if(Array.isArray(value))
-      error.response.data[attr] = value[0]
-  }
-  
-  return { error: error.response.data }
-}
+import { formatErrorResponse } from "./utils";
 
 export async function loginConnection(request: LoginModel): Promise<LoginResult> {
   
@@ -38,7 +26,15 @@ export async function registerConnection(request: RegisterModel): Promise<Regist
   }
 }
 
+export function loadSession() {
+  connection.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+}
+
 export function logout() {
   connection.defaults.headers.common['Authorization'] = ''
   localStorage.removeItem('token')
+}
+
+export function isLogged() {
+  return !!connection.defaults.headers.common['Authorization']
 }

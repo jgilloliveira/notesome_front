@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { BrowserRouter } from "react-router-dom";
+import { loadSession } from './connections/session.connection';
 import { RootRoutes } from './routes/root.routes';
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  loadSession()
   
   return (
     <div className="App">

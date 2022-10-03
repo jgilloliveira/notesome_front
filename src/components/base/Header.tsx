@@ -11,13 +11,13 @@ type HeaderProps = HeaderParams
   setOpenSidebar: (value: boolean) => void
 }
 
-export function Header(props: HeaderProps) {
+export function Header({ openSidebar, setOpenSidebar, ...props }: HeaderProps) {
 
   const [openUserMenu, setOpenUserMenu] = useState(false)
   const navigate = useNavigate()
 
   function onClickToggleSidebar() {
-    props.setOpenSidebar(!props.openSidebar)
+    setOpenSidebar(!openSidebar)
   }
 
   function onClickUser(){
