@@ -1,13 +1,18 @@
+import { useNavigate } from 'react-router-dom'
 import { Folder } from '../../types/folder.type'
+import { Button } from '../base'
 
 type FolderParams = {
   folder: Partial<Folder>
 }
 
 export function FolderItem({folder}: FolderParams) {
+
+  const navigate = useNavigate()
+
   return (
-    <div className='bo-primary rounded-border-md pa-lg ma-sm' style={{minWidth: "140px"}}>
+    <Button flat={true} onClick={() => navigate(`/folders/${folder.id}`)} className='bo-primary rounded-border-md pa-lg ma-sm' style={{minWidth: "140px"}}>
       {folder.name}
-    </div>
+    </Button>
   )
 }

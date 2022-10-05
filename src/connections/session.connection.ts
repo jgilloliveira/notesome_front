@@ -27,7 +27,9 @@ export async function registerConnection(request: RegisterModel): Promise<Regist
 }
 
 export function loadSession() {
-  connection.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+  const token = localStorage.getItem('token')
+  if (token)
+    connection.defaults.headers.common['Authorization'] = `Token ${token}`
 }
 
 export function logout() {

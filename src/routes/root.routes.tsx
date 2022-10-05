@@ -9,6 +9,7 @@ function AuthRoutes() {
   
   return (
     <Routes>
+      <Route path="/folders/:parentFolder" element={<HomePage/>}/>
       <Route path="/" element={<HomePage/>}/>
     </Routes>
   )
