@@ -11,8 +11,11 @@ export function NoteItem({note}: NoteParams) {
   const navigate = useNavigate()
 
   return (
-    <Button flat={true} onClick={() => navigate(`/notes/${note.id}`)} className='bo-primary rounded-border-md pa-lg ma-sm' style={{minWidth: "140px"}}>
-      {note.title}
+    <Button flat={true} onClick={() => navigate(`/notes/${note.id}`)} className='bo-primary rounded-border-md pa-lg ma-sm column justify-start' style={{minWidth: "140px"}}>
+      <div className='row justify-start text-body1'>
+       <strong>{note.title}</strong> 
+      </div>
+      <div className='row justify-start'>{note.content}</div>
     </Button>
   )
 }

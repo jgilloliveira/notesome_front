@@ -27,12 +27,13 @@ export function HomePage() {
 
   return (
     <MainLayout>
-      <Page>
+      <Page className="ma-lg">
         <div>
-          parentFolder: {parentFolder}
+          <div className="ma-sm text-grey">Carpetas </div>
+          <FolderList list={folders}/>
         </div>
-        <div>
-          <FolderList list={folders} />
+        <div className="mt-lg">
+          <div className="ma-sm text-grey">Notas </div>
           <NoteList list={notes}/>
         </div>
       </Page>
