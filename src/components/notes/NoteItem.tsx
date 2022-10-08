@@ -3,15 +3,16 @@ import { Note } from '../../types/note.type'
 import { Button } from '../base'
 
 type NoteParams = {
-  note: Partial<Note>
+  note: Partial<Note>,
+  onClick: () => void
 }
 
-export function NoteItem({note}: NoteParams) {
+export function NoteItem({note, onClick}: NoteParams) {
 
   const navigate = useNavigate()
 
   return (
-    <Button flat={true} onClick={() => navigate(`/notes/${note.id}`)} className='bo-primary rounded-border-md pa-lg ma-sm column justify-start' style={{minWidth: "140px"}}>
+    <Button flat={true} onClick={onClick} className='bo-primary rounded-border-md pa-lg ma-sm column justify-start' style={{minWidth: "140px"}}>
       <div className='row justify-start text-body1'>
        <strong>{note.title}</strong> 
       </div>

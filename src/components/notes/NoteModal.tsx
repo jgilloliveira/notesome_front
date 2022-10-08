@@ -6,8 +6,8 @@ type NoteModalProps = {
 export function NoteModal({note}: NoteModalProps) {
   return (
     <div>
-      <div>{note.title}</div>
-      <div>{note.content}</div>
+      <div className="text-body1">{note.title}</div>
+      <div className="">{note.content}</div>
     </div>
   )  
 }

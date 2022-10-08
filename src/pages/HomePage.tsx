@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Page } from "../components/base";
 import { FolderList } from "../components/foldels/FolderList";
 import { NoteList } from "../components/notes/NoteList";
+import { NoteModal } from "../components/notes/NoteModal";
 import { getFolders, getNotes } from "../connections/folders.connection";
 import { MainLayout } from "../layouts/MainLayout";
 import { Folder } from "../types/folder.type";
@@ -11,8 +12,8 @@ import { Note } from "../types/note.type";
 export function HomePage() {
   const [folders, setFolders] = useState<Folder[]>([])
   const [notes, setNotes] = useState<Note[]>([])
-
   const { parentFolder } = useParams()
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null)
 
   useEffect(() => {
     (async () => {
@@ -22,6 +23,10 @@ export function HomePage() {
       if (!notesError) setNotes(notesData!)
     })()
   }, [parentFolder])
+
+  function handleOpenNate( note: Note ) {
+    setSelectedNote(note)
+  }
   
 
 
@@ -34,8 +39,9 @@ export function HomePage() {
         </div>
         <div className="mt-lg">
           <div className="ma-sm text-grey">Notas </div>
-          <NoteList list={notes}/>
+          <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
+        { selectedNote && <NoteModal note={selectedNote}/> }
       </Page>
     </MainLayout> 
   )
