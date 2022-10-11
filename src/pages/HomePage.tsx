@@ -24,12 +24,6 @@ export function HomePage() {
     })()
   }, [parentFolder])
 
-  function handleOpenNate( note: Note ) {
-    setSelectedNote(note)
-  }
-  
-
-
   return (
     <MainLayout>
       <Page className="ma-lg">
@@ -41,7 +35,7 @@ export function HomePage() {
           <div className="ma-sm text-grey">Notas </div>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
-        { selectedNote && <NoteModal note={selectedNote}/> }
+        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} /> }
       </Page>
     </MainLayout> 
   )
