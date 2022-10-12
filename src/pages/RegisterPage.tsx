@@ -54,12 +54,12 @@ export function RegisterPage() {
           ? <RegisterSuccessful/>
           : <div className='column gap-lg'>
               <h4>Register your new account</h4>
-              <Input value={register.username} label="Nombre de usuario" disable={loading} error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
-              <Input value={register.firstName} label="Nombre" disable={loading} error={error.firstName} onChange={(value) => handleOnChange(value, "firstName")}/>
-              <Input value={register.lastName} label="Apellido" disable={loading} error={error.lastName} onChange={(value) => handleOnChange(value, "lastName")}/>
-              <Input value={register.email} label="Email" disable={loading} error={error.email} onChange={(value) => handleOnChange(value, "email")} type='email' />
-              <Input value={register.password} label="Contraseña" disable={loading} error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
-              <Input value={register.confirmPass} label="Confermar contraseña" disable={loading} error={error.confirmPass} onChange={(value) => handleOnChange(value, "confirmPass")} type='password'/>
+              <Input value={register.username} label="Nombre de usuario" disabled={loading} error={error.username} onChange={(value) => handleOnChange(value, "username")}/>
+              <Input value={register.firstName} label="Nombre" disabled={loading} error={error.firstName} onChange={(value) => handleOnChange(value, "firstName")}/>
+              <Input value={register.lastName} label="Apellido" disabled={loading} error={error.lastName} onChange={(value) => handleOnChange(value, "lastName")}/>
+              <Input value={register.email} label="Email" disabled={loading} error={error.email} onChange={(value) => handleOnChange(value, "email")} type='email' />
+              <Input value={register.password} label="Contraseña" disabled={loading} error={error.password} onChange={(value) => handleOnChange(value, "password")} type='password'/>
+              <Input value={register.confirmPass} label="Confermar contraseña" disabled={loading} error={error.confirmPass} onChange={(value) => handleOnChange(value, "confirmPass")} type='password'/>
               <div className='text-red mt-xs text-caption'>{error.error}</div>
               <Button onClick={handleRegister}>{ loading? "Registrando": "Register"}</Button>
               {/* TODO: Loader de corazoncito */}

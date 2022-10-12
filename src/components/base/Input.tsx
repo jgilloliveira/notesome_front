@@ -1,33 +1,33 @@
 import React from 'react';
 import '../../css/styles.css'
+import { InputParams } from '../../types';
 
-type InputParams = {
-  placeholder?: string,
-  type?: "text" | "password" | "number" | "email",
-  value: string,
+type InputProps = {
   error?: string,
   label?: string,
-  disable?: boolean,
+  flat?: boolean,
   onChange: (value: string) => void 
-}
+} & Omit<InputParams, "onChange">
 
-export function Input(props: InputParams) {
+
+
+export function Input({error, label, flat, onChange, ...props}: InputProps) {
 
   // Default values
   const type = props.type || 'text'
 
   return (
     <div className='column'>
-      { props.label && <div className='text-primary mb-xs text-caption'>{props.label}</div> }
+      { label && <div className='text-primary mb-xs text-caption'>{label}</div> }
       <input 
         type={type}
         placeholder={props.placeholder}
         value={props.value}
-        onChange={({target})=>{props.onChange(target.value)}}
-        className={`pa-md no-border ${ props.error? 'bb-red': 'bb-primary'}`}
-        disabled={props.disable}
+        onChange={({target})=>{onChange(target.value)}}
+        className={`pa-md no-border ${ error? 'bb-red': flat? '': 'bb-primary'}`}
+        disabled={props.disabled}
       />
-      { props.error && <div className='text-red mt-xs text-caption'>{props.error}</div> }
+      { error && <div className='text-red mt-xs text-caption'>{error}</div> }
     </div>
   )
 }
