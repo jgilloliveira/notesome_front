@@ -30,6 +30,14 @@ body {
   background-color: var(--primary);
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
+.text-black {
+  color: black;
+}
+
 .text-white {
   color: white;
 }
@@ -40,10 +48,6 @@ body {
 
 .text-grey {
   color: grey;
-}
-
-.opacity-80 {
-  opacity: 0.5;
 }
 
 .opacity-80-hover:hover {

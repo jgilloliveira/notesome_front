@@ -15,17 +15,3 @@ export async function getFolders(parentFolder?: number | string): Promise<{ data
     return {error}
   } 
 }
-
-export async function getNotes(parentFolder?: number | string): Promise<{ data?: Note[], error?: any }> {
-
-  const url = parentFolder? `notes/?folder=${parentFolder}`:"notes/?folder__isnull=True"
-
-  try {
-    const { data } = await connection.get<Note[]>(url)
-    
-    return { data }
-
-  } catch (error: any) {  
-    return {error}
-  } 
-}
