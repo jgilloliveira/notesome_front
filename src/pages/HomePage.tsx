@@ -25,6 +25,10 @@ export function HomePage() {
     })()
   }, [parentFolder])
 
+  function onUpdate( note: Note) {
+    setNotes(notes.map((element) => element.id===note.id? note: element))
+  }
+
   return (
     <MainLayout>
       <Page className="ma-lg">
@@ -36,7 +40,7 @@ export function HomePage() {
           <div className="ma-sm text-grey">Notas </div>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
-        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} /> }
+        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onUpdate={onUpdate} /> }
       </Page>
     </MainLayout> 
   )

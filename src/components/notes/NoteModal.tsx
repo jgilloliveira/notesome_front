@@ -1,18 +1,28 @@
 import { useState } from "react";
+import { patchNote } from "../../connections/notes.connection";
 import { Note } from "../../types/note.type";
 import { Button, Input } from "../base";
 
 type NoteModalProps = {
   note: Note,
-  onClose: () => void
+  onClose: () => void,
+  onUpdate: (note: Note) => void
 }
 
-export function NoteModal({note, onClose}: NoteModalProps) {
+export function NoteModal({note, onClose, onUpdate}: NoteModalProps) {
 
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
+  const [error, setError] = useState("")  
 
-  function handleSaveNote() {
+  async function handleSaveNote() {
+    const {data, error} = await patchNote(note.id, {title, content})
+
+    if (error) setError("Ocurrió un error al guardar la nota")
+    else if (data) {
+      onUpdate(data)
+      onClose()
+    }
     
   }
 
@@ -29,6 +39,7 @@ export function NoteModal({note, onClose}: NoteModalProps) {
         <div className="column flex-center">
           <Button className="ma-md" onClick={handleSaveNote} style={{width: "150px"}}>Guardar</Button>
         </div> 
+        { error && <div className="text-red">{error}</div>}
       </div>
     </div>
   )  
