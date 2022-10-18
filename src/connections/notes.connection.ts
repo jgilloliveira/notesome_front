@@ -25,3 +25,14 @@ export async function patchNote( noteId: number, note: Partial<Note>) {
     return {error}
   }
 }
+
+export async function postNote(note: Partial<Note>) {
+  
+  const url = `notes/`
+  try {
+    const { data } = await connection.post<Note>(url, note)
+    return { data }
+  } catch (error: any) {
+    return {error}
+  }
+}

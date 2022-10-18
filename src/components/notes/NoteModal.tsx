@@ -4,31 +4,29 @@ import { Note } from "../../types/note.type";
 import { Button, Input } from "../base";
 
 type NoteModalProps = {
-  note: Note,
+  note?: Note,
   onClose: () => void,
-  onUpdate: (note: Note) => void
+  onSave: (note: Partial<Note>) => Promise<{ error: any }>
 }
 
-export function NoteModal({note, onClose, onUpdate}: NoteModalProps) {
+export function NoteModal({note, onClose, onSave}: NoteModalProps) {
 
-  const [title, setTitle] = useState(note.title)
-  const [content, setContent] = useState(note.content)
+  const [title, setTitle] = useState(note?.title || "")
+  const [content, setContent] = useState(note?.content || "")
   const [error, setError] = useState("")  
 
   async function handleSaveNote() {
-    const {data, error} = await patchNote(note.id, {title, content})
+
+    const { error } = await onSave({id: note?.id, title, content})
 
     if (error) setError("Ocurrió un error al guardar la nota")
-    else if (data) {
-      onUpdate(data)
-      onClose()
-    }
+    else onClose()
     
   }
 
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
-      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ height: "200px", backgroundColor: note.color}}>
+      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ height: "200px", backgroundColor: note?.color || "#FFF"}}>
         <div className="bb-primary pa-md row justify-between item-center">
           <Input value={title} flat={true} onChange={setTitle} className="text-body1"/>
           <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
