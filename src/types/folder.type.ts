@@ -7,4 +7,6 @@ export interface Folder {
   creationDate: string
 }
 
-
+export interface SerializedFolder extends Omit<Folder, "parentFolder" | "childFolders"> {
+  parentFolder: number | string,
+}

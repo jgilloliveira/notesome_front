@@ -6,5 +6,6 @@ export interface Note {
   isFavorite: boolean,
   isDelete: boolean,
   modifiedDate: string,
-  creationDate: string
+  creationDate: string,
+  folder: number | string
 }

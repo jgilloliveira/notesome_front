@@ -1,4 +1,4 @@
-import { Folder } from '../types/folder.type'
+import { Folder, SerializedFolder } from '../types/folder.type'
 import { Note } from '../types/note.type'
 import { connection } from './axios.config'
 import { formatErrorResponse } from './utils'
@@ -9,6 +9,19 @@ export async function getFolders(parentFolder?: number | string): Promise<{ data
 
   try {
     const { data } = await connection.get<Folder[]>(url)    
+    return { data }
+
+  } catch (error: any) {  
+    return {error}
+  } 
+}
+
+export async function postFolder(folder: Partial<SerializedFolder>): Promise<{ data?: Folder, error?: any }> {
+
+  const url = `folders/`
+
+  try {
+    const { data } = await connection.post<Folder>(url, folder)    
     return { data }
 
   } catch (error: any) {  

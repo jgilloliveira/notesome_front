@@ -4,7 +4,7 @@ import { Button, Page } from "../components/base";
 import { FolderList } from "../components/foldels/FolderList";
 import { NoteList } from "../components/notes/NoteList";
 import { NoteModal } from "../components/notes/NoteModal";
-import { getFolders } from "../connections/folders.connection";
+import { getFolders, postFolder } from "../connections/folders.connection";
 import { getNotes, patchNote, postNote } from "../connections/notes.connection";
 import { MainLayout } from "../layouts/MainLayout";
 import { Folder } from "../types/folder.type";
@@ -16,6 +16,7 @@ export function HomePage() {
   const { parentFolder } = useParams()
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [creatingNote, setCreatingNote] = useState(false)
+  const [creatingFolder, setCreatingFolder] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -26,7 +27,15 @@ export function HomePage() {
     })()
   }, [parentFolder])
 
-  async function onUpdate( note: Partial<Note>) {
+  async function onCreateFolder( folder: Partial<Folder>) {
+
+    const {data, error} = await postFolder({...folder, parentFolder })
+
+    if(!error && data) setFolders([...folders, data])
+    return { error }
+  }
+
+  async function onUpdateNote( note: Partial<Note>) {
     if(!note.id) return { error: true }
 
     const {data, error} = await patchNote(note.id, note)
@@ -35,8 +44,9 @@ export function HomePage() {
     return { error }
   }
 
-  async function onCreate( note: Partial<Note>) {
-    const {data, error} = await postNote(note)
+  async function onCreateNote( note: Partial<Note>) {
+
+    const {data, error} = await postNote({...note, folder: parentFolder })
 
     if(!error && data) setNotes([...notes, data])
     return { error }
@@ -47,6 +57,7 @@ export function HomePage() {
       <Page className="ma-lg">
         <div>
           <div className="ma-sm text-grey">Carpetas </div>
+          <Button onClick={() => {setCreatingFolder(true)}}>Agregar</Button>
           <FolderList list={folders}/>
         </div>
         <div className="mt-lg">
@@ -54,8 +65,10 @@ export function HomePage() {
           <Button onClick={() => {setCreatingNote(true)}}>Agregar</Button>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
-        { creatingNote && <NoteModal onClose={() => setCreatingNote(false)} onSave={onCreate} /> }
-        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdate} /> }
+        {/* TODO: Crear FolderModal */}
+        { creatingFolder && <FolderModal onClose={() => setCreatingFolder(false)} onSave={onCreateFolder} /> }
+        { creatingNote && <NoteModal onClose={() => setCreatingNote(false)} onSave={onCreateNote} /> }
+        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }
       </Page>
     </MainLayout> 
   )
