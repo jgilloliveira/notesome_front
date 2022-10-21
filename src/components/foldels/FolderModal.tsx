@@ -25,7 +25,7 @@ export function FolderModal({folder, onClose, onSave}: FolderModalProps) {
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
       <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ height: "100px", backgroundColor:"#FFF"}}>
-        <div className="bb-primary pa-md row justify-between item-center">
+        <div className="bb-primary pa-md row justify-between items-center">
           <Input value={name} flat={true} onChange={setName} className="text-body1"/>
           <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
         </div>

@@ -5,7 +5,7 @@ import { FolderList } from "../components/foldels/FolderList";
 import { FolderModal } from "../components/foldels/FolderModal";
 import { NoteList } from "../components/notes/NoteList";
 import { NoteModal } from "../components/notes/NoteModal";
-import { getFolders, patchFolder, postFolder } from "../connections/folders.connection";
+import { getFolderById, getFolders, patchFolder, postFolder } from "../connections/folders.connection";
 import { getNotes, patchNote, postNote } from "../connections/notes.connection";
 import { MainLayout } from "../layouts/MainLayout";
 import { Folder } from "../types/folder.type";
@@ -25,11 +25,18 @@ export function HomePage() {
     (async () => {
       const { data: foldersData, error: foldersError } = await getFolders(parentFolder)
       const { data: notesData, error: notesError } = await getNotes(parentFolder)
+      
       if (!foldersError) setFolders(foldersData!)
       if (!notesError) setNotes(notesData!)
+      if (parentFolder) {
+        const { data: folderData, error: folderError } = await getFolderById(parentFolder)
+        if(!folderError && folderData) setCurrentFolder(folderData)
+      } else {
+        setCurrentFolder(undefined)
+      }
     })()
   }, [parentFolder])
-  parentFolder
+  
   async function onCreateFolder( folder: Partial<Folder>) {
 
     const {data, error} = await postFolder({...folder, parentFolder })
@@ -40,9 +47,9 @@ export function HomePage() {
 
   async function onUpdateFolder( folder: Partial<Folder>) {
     if(!currentFolder) return { error: true }
-    const {data, error} = await patchFolder(currentFolder.id, folder )
+    const {data, error} = await patchFolder(currentFolder.id, folder)
 
-    if(!error && data) setFolders([...folders, data])
+    if(!error && data) setCurrentFolder(data)
     return { error }
   }
 
@@ -52,7 +59,7 @@ export function HomePage() {
 
     const {data, error} = await patchNote(note.id, note)
 
-    if(!error && data) setNotes(notes.map((element) => element.id===note.id? data: element))
+    if(!error && data) setNotes(notes.map((element) => element.id===data.id? data: element))
     return { error }
   }
 
@@ -67,21 +74,25 @@ export function HomePage() {
   return (
     <MainLayout>
       <Page className="ma-lg">
-        <div>
-          <div className="ma-sm text-grey">Carpetas </div>
+        <div className="row items-center">
+          <div className="ma-sm text-grey text-h3">{currentFolder?.name} </div>
           <Button onClick={() => {setSelectedFolder(true)}}>Editar</Button>
         </div>
         <div>
-          <div className="ma-sm text-grey">Carpetas </div>
-          <Button onClick={() => {setCreatingFolder(true)}}>Agregar</Button>
+          <div  className="row items-center">
+            <div className="ma-sm text-grey">Carpetas </div>
+            <Button onClick={() => {setCreatingFolder(true)}}>Agregar</Button>
+          </div>
           <FolderList list={folders}/>
         </div>
         <div className="mt-lg">
-          <div className="ma-sm text-grey">Notas </div>
-          <Button onClick={() => {setCreatingNote(true)}}>Agregar</Button>
+          <div  className="row items-center">
+            <div className="ma-sm text-grey">Notas </div>
+            <Button onClick={() => {setCreatingNote(true)}}>Agregar</Button>
+          </div>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
-        { selectedFolder && <FolderModal folder={currentFolder} onClose={() => setSelectedFolder(false)} onSave={onCreateFolder} /> }
+        { selectedFolder && <FolderModal folder={currentFolder} onClose={() => setSelectedFolder(false)} onSave={onUpdateFolder} /> }
         { creatingFolder && <FolderModal onClose={() => setCreatingFolder(false)} onSave={onCreateFolder} /> }
         { creatingNote && <NoteModal onClose={() => setCreatingNote(false)} onSave={onCreateNote} /> }
         { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }

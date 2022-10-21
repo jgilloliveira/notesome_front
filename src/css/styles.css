@@ -96,7 +96,7 @@ body {
 
 .justify-start {justify-content: start;}
 .justify-center, .flex-center {justify-content: center;}
-.item-center, .flex-center {align-items: center;}
+.items-center, .flex-center {align-items: center;}
 .justify-between {justify-content: space-between;}
 
 /* Positions */

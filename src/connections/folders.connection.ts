@@ -44,7 +44,7 @@ export async function postFolder(folder: Partial<SerializedFolder>): Promise<{ d
 
 export async function patchFolder(id: number | string, folder: Partial<Folder>): Promise<{ data?: Folder, error?: any }> {
 
-  const url = `folders/${id}`
+  const url = `folders/${id}/`
 
   try {
     const { data } = await connection.patch<Folder>(url, folder)    
