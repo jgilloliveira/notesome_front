@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 import { Button, Page } from "../components/base";
 import { FolderList } from "../components/foldels/FolderList";
 import { FolderModal } from "../components/foldels/FolderModal";
@@ -20,6 +20,7 @@ export function HomePage() {
   const [selectedFolder, setSelectedFolder] = useState(false)
   const [creatingNote, setCreatingNote] = useState(false)
   const [creatingFolder, setCreatingFolder] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     (async () => {
@@ -64,7 +65,7 @@ export function HomePage() {
   }
 
   async function onCreateNote( note: Partial<Note>) {
-
+    
     const {data, error} = await postNote({...note, folder: parentFolder })
 
     if(!error && data) setNotes([...notes, data])
@@ -75,8 +76,14 @@ export function HomePage() {
     <MainLayout>
       <Page className="ma-lg">
         <div className="row items-center">
-          <div className="ma-sm text-grey text-h3">{currentFolder?.name} </div>
-          <Button onClick={() => {setSelectedFolder(true)}}>Editar</Button>
+          <div className="ma-sm text-grey text-h3">{currentFolder?.name || "Main Folder"} </div>
+          { currentFolder && <Button onClick={() => {setSelectedFolder(true)}}>Editar</Button> }
+        </div>
+        <div>
+        { currentFolder && <div>
+          <Button flat={true} onClick={() => navigate("/")}>home</Button>
+          { currentFolder.url.map(elemnt => <Button flat={true} onClick={() => navigate(`/folders/${elemnt.id}`)}>/ {elemnt.name}</Button>) }
+        </div>}
         </div>
         <div>
           <div  className="row items-center">

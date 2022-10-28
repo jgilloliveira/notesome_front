@@ -4,7 +4,8 @@ export interface Folder {
   parentFolder: Folder,
   childFolders: Folder[],
   modifiedDate: string,
-  creationDate: string
+  creationDate: string,
+  url: {id:number, name: string}[]
 }
 
 export interface SerializedFolder extends Omit<Folder, "parentFolder" | "childFolders"> {
