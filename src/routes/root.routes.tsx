@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet, Link, Navigate } from "react-router-dom";
 import { isLogged } from "../connections/session.connection";
+import { FavoritePage } from "../pages/FavoritePage";
 import { HomePage } from "../pages/HomePage";
 import { SessionRoutes } from "./session.routes";
 
@@ -10,6 +11,7 @@ function AuthRoutes() {
   return (
     <Routes>
       <Route path="/folders/:parentFolder" element={<HomePage/>}/>
+      <Route path="/favorites" element={<FavoritePage/>}/>
       <Route path="/" element={<HomePage/>}/>
     </Routes>
   )

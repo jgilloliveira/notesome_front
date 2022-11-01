@@ -26,6 +26,10 @@ body {
   background-color: white;
 }
 
+.bg-gray {
+  background-color: gray;
+}
+
 .bg-primary {
   background-color: var(--primary);
 }
@@ -245,3 +249,7 @@ body {
 .text-caption {
   font-size: 12px;
 }
+
+.text-left { text-align: left; }
+.text-rigt { text-align: right; }
+.text-center { text-align: center; }

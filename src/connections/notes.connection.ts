@@ -15,6 +15,20 @@ export async function getNotes(parentFolder?: number | string): Promise<{ data?:
   } 
 }
 
+export async function getFavoriteNotes(): Promise<{ data?: Note[], error?: any }> {
+
+  const url =  "notes/?is_favorite=True"
+
+  try {
+    const { data } = await connection.get<Note[]>(url)
+    
+    return { data }
+
+  } catch (error: any) {  
+    return {error}
+  } 
+}
+
 export async function patchNote( noteId: number, note: Partial<Note>) {
   
   const url = `notes/${noteId}/`
