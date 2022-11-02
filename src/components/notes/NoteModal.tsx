@@ -13,15 +13,21 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
 
   const [title, setTitle] = useState(note?.title || "")
   const [content, setContent] = useState(note?.content || "")
+  const [favorite, setFavorite] = useState(note?.isFavorite)
   const [error, setError] = useState("")  
 
   async function handleSaveNote() {
-
-    const { error } = await onSave({id: note?.id, title, content})
+    const { error } = await onSave({id: note?.id, title, content, isFavorite:favorite})
 
     if (error) setError("Ocurrió un error al guardar la nota")
     else onClose()
-    
+  }
+
+  async function handleDeletedNote() {
+    const { error } = await onSave({id: note?.id, isDeleted:true})
+
+    if (error) setError("Ocurrió un error al eliminar la nota")
+    else onClose()
   }
 
   return (
@@ -34,7 +40,10 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
         <div className="pa-md grow-1">
         <Input value={content} flat={true} onChange={setContent} className="text-body1"/>
         </div>
-        <div className="column flex-center">
+        <div className="row flex-center">
+          <Button className="ma-md" flat={true} onClick={handleDeletedNote} >🗑</Button>
+          {/* <Button className="ma-md" onClick={handleSaveNote} style={{width: "150px"}}>Guardar</Button> */}
+          <Button className="ma-md" flat={true} onClick={() => setFavorite(!favorite)} >{favorite? "★":"☆"}</Button>
           <Button className="ma-md" onClick={handleSaveNote} style={{width: "150px"}}>Guardar</Button>
         </div> 
         { error && <div className="text-red">{error}</div>}

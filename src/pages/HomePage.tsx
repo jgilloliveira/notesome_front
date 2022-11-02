@@ -60,7 +60,10 @@ export function HomePage() {
 
     const {data, error} = await patchNote(note.id, note)
 
-    if(!error && data) setNotes(notes.map((element) => element.id===data.id? data: element))
+    if(!error && data) {
+      if(data.isDeleted) setNotes(notes.filter((element) => element.id!==data.id))
+      else setNotes(notes.map((element) => element.id===data.id? data: element))
+    }
     return { error }
   }
 

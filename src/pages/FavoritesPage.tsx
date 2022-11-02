@@ -10,7 +10,7 @@ import { getFavoriteNotes, getNotes, patchNote, postNote } from "../connections/
 import { MainLayout } from "../layouts/MainLayout";
 import { Note } from "../types/note.type";
 
-export function FavoritePage() {
+export function FavoritesPage() {
   const [notes, setNotes] = useState<Note[]>([])
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
 

@@ -4,7 +4,7 @@ export interface Note {
   content: string,
   color: string,
   isFavorite: boolean,
-  isDelete: boolean,
+  isDeleted: boolean,
   modifiedDate: string,
   creationDate: string,
   folder: number | string

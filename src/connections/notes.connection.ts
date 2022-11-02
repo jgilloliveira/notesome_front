@@ -3,7 +3,7 @@ import { connection } from './axios.config'
 
 export async function getNotes(parentFolder?: number | string): Promise<{ data?: Note[], error?: any }> {
 
-  const url = parentFolder? `notes/?folder=${parentFolder}`:"notes/?folder__isnull=True"
+  const url = (parentFolder? `notes/?folder=${parentFolder}`:"notes/?folder__isnull=True") + "&is_deleted=False"
 
   try {
     const { data } = await connection.get<Note[]>(url)
@@ -17,7 +17,21 @@ export async function getNotes(parentFolder?: number | string): Promise<{ data?:
 
 export async function getFavoriteNotes(): Promise<{ data?: Note[], error?: any }> {
 
-  const url =  "notes/?is_favorite=True"
+  const url =  "notes/?is_favorite=True&is_deleted=False"
+
+  try {
+    const { data } = await connection.get<Note[]>(url)
+    
+    return { data }
+
+  } catch (error: any) {  
+    return {error}
+  } 
+}
+
+export async function getDeletedNotes(): Promise<{ data?: Note[], error?: any }> {
+
+  const url =  "notes/?is_deleted=True"
 
   try {
     const { data } = await connection.get<Note[]>(url)

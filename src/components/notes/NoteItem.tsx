@@ -13,8 +13,9 @@ export function NoteItem({note, onClick}: NoteParams) {
 
   return (
     <Button flat={true} onClick={onClick} className='bo-primary rounded-border-md pa-lg ma-sm column justify-start' style={{minWidth: "140px"}}>
-      <div className='row justify-start text-body1'>
-       <strong>{note.title}</strong> 
+      <div className='row justify-between text-body1 full-width '>
+        <strong>{note.title}</strong> 
+        {note.isFavorite && <div>★</div>}
       </div>
       <div className='row justify-start'>{note.content}</div>
     </Button>
