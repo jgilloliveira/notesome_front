@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {  Page } from "../components/base";
+import { DeletedOptionsModal } from "../components/notes/DeletedOptionsModal";
 import { NoteList } from "../components/notes/NoteList";
-import { NoteModal } from "../components/notes/NoteModal";
-import { getDeletedNotes, patchNote } from "../connections/notes.connection";
+import { deleteNote, getDeletedNotes, patchNote } from "../connections/notes.connection";
 import { MainLayout } from "../layouts/MainLayout";
 import { Note } from "../types/note.type";
 
@@ -18,12 +18,14 @@ export function DeletedsPage() {
     })()
   }, [])
 
-  async function onUpdateNote( note: Partial<Note>) {
+  async function onUpdateNote( note: Partial<Note>, options?: {isRestore?: boolean, isPermanentDelete?: boolean}) {
     if(!note.id) return { error: true }
 
-    const {data, error} = await patchNote(note.id, note)
+    const {data, error} = options?.isPermanentDelete? await deleteNote(note.id): await patchNote(note.id, note)
 
-    if(!error && data) setNotes(notes.map((element) => element.id===data.id? data: element))
+    if(!error) {
+      if(options?.isRestore || options?.isPermanentDelete) setNotes(notes.filter((element) => element.id!==note.id))
+    }
     return { error }
   }
 
@@ -39,7 +41,7 @@ export function DeletedsPage() {
           </div>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
-        { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }
+        { selectedNote && <DeletedOptionsModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }
       </Page>
     </MainLayout> 
   )

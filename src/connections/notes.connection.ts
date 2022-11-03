@@ -64,3 +64,14 @@ export async function postNote(note: Partial<Note>) {
     return {error}
   }
 }
+
+export async function deleteNote(noteId: number | string) {
+  
+  const url = `notes/${noteId}`
+  try {
+    const { data } = await connection.delete<Note>(url)
+    return { data }
+  } catch (error: any) {
+    return {error}
+  }
+}

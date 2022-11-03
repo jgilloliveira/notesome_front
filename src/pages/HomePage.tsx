@@ -75,6 +75,7 @@ export function HomePage() {
     return { error }
   }
 
+  // TODO: Guardar nota con título sin contenido
   return (
     <MainLayout>
       <Page className="ma-lg">
