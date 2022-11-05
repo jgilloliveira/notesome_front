@@ -16,10 +16,11 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
   const [content, setContent] = useState(note?.content || "")
   const [favorite, setFavorite] = useState(note?.isFavorite)
   const [selectingColor, setSelectingColor] = useState(false)
+  const [color, setColor] = useState(note?.color)
   const [error, setError] = useState("")  
 
   async function handleSaveNote() {
-    const { error } = await onSave({id: note?.id, title, content, isFavorite:favorite})
+    const { error } = await onSave({id: note?.id, title, content, color, isFavorite:favorite})
 
     if (error) setError("Ocurrió un error al guardar la nota")
     else onClose()
@@ -32,9 +33,15 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
     else onClose()
   }
 
+  async function save(updates: Partial<Note>) {
+    const { error } = await onSave({id: note?.id, ...updates})
+
+    if (error) setError("Ocurrió un error al eliminar la nota")
+  }
+
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
-      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "280px", height: "200px", backgroundColor: note?.color || "#FFF"}}>
+      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "280px", height: "200px", backgroundColor: color || "#FFF"}}>
       {!selectingColor?
         <>
           <div className="bb-primary pa-md row justify-between items-center">
@@ -47,11 +54,24 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
           <div className="row flex-center">
             <Button className="ma-md" flat={true} onClick={handleDeletedNote} >🗑</Button>
             <Button className="ma-md" flat={true} onClick={() => setSelectingColor(!selectingColor)}>🎨</Button>
-            <Button className="ma-md" flat={true} onClick={() => setFavorite(!favorite)} >{favorite? "★":"☆"}</Button>
+            <Button
+              className="ma-md"
+              flat={true}
+              onClick={() => {
+                setFavorite(!favorite)
+                save({isFavorite:!favorite})
+              }}
+            >
+              {favorite? "★":"☆"}
+            </Button>
             <Button className="ma-md" onClick={handleSaveNote} style={{width: "150px"}}>Guardar</Button>
           </div>
         </> :
-        <ColorPicker/>
+        <ColorPicker onClick={(newColor) => {
+          setSelectingColor(false)
+          setColor(newColor)
+          save({color:newColor})
+        }}/>
       }
       { error && <div className="text-red">{error}</div>}
       </div>

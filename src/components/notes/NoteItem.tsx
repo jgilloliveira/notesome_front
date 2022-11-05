@@ -12,7 +12,12 @@ export function NoteItem({note, onClick}: NoteParams) {
   const navigate = useNavigate()
 
   return (
-    <Button flat={true} onClick={onClick} className='bo-primary rounded-border-md pa-lg ma-sm column justify-start' style={{minWidth: "140px"}}>
+    <Button 
+      flat={true}
+      onClick={onClick}
+      className='bo-primary rounded-border-md pa-lg ma-sm column justify-start'
+      style={{minWidth: "140px", backgroundColor: note.color}}
+    >
       <div className='row justify-between text-body1 full-width '>
         <strong>{note.title}</strong> 
         {note.isFavorite && <div>★</div>}
