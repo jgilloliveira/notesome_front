@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { DivParams } from "../../types";
+import { CategoryList } from "../categories/CategoryList";
 import { Button } from "./Button";
 
 export function Sidebar(props: DivParams) {
@@ -9,7 +10,8 @@ export function Sidebar(props: DivParams) {
       <Button flat={true} className="bg-transparent text-left" onClick={() => navigate('/')}>Home</Button>
       <Button flat={true} className="bg-transparent text-left" onClick={() => navigate('/favorites')}>Favoritos</Button>
       <Button flat={true} className="bg-transparent text-left" onClick={() => navigate('/deleteds')}>Eliminados</Button>
-      <Button>Categorias</Button>
+      <div>Categorias</div>
+      <CategoryList/>
     </div>
   )
 }
