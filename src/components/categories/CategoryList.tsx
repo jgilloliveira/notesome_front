@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { getCategories } from "../../connections/categories.connection"
 import { Category } from "../../types/category.type"
 import { Button } from "../base"
 
 export function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     (async () => {
@@ -21,7 +23,7 @@ export function CategoryList() {
         <Button
           flat={true}
           className="bg-transparent text-left"
-          onClick={() => {}}
+          onClick={() => navigate(`/categories/${category.id}`)}
         >
           {category.name}
         </Button>)

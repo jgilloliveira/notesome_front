@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { Folder } from "../../types/folder.type";
+import { Category } from "../../types/category.type";
 import { Button, Input } from "../base";
 
-type FolderModalProps = {
-  folder?: Folder,
+type CategoryModalProps = {
+  category?: Category,
   onClose: () => void,
-  onSave: (folder: Partial<Folder>) => Promise<{ error: any }>
+  onSave: (category: Partial<Category>) => Promise<{ error: any }>
 }
 
-export function FolderModal({folder, onClose, onSave}: FolderModalProps) {
+export function CategoryModal({category, onClose, onSave}: CategoryModalProps) {
 
-  const [name, setName] = useState(folder?.name || "")
+  const [name, setName] = useState(category?.name || "")
   const [error, setError] = useState("")  
 
-  async function handleSaveFolder() {
+  async function handleSaveCategory() {
 
-    const { error } = await onSave({id: folder?.id, name})
+    const { error } = await onSave({id: category?.id, name})
 
-    if (error) setError("Ocurrió un error al guardar la carpeta")
+    if (error) setError("Ocurrió un error al guardar la categoria")
     else onClose()
     
   }
@@ -30,7 +30,7 @@ export function FolderModal({folder, onClose, onSave}: FolderModalProps) {
           <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
         </div>
         <div className="column flex-center">
-          <Button className="ma-md" onClick={handleSaveFolder} style={{width: "150px"}}>Guardar</Button>
+          <Button className="ma-md" onClick={handleSaveCategory} style={{width: "150px"}}>Guardar</Button>
         </div> 
         { error && <div className="text-red">{error}</div>}
       </div>

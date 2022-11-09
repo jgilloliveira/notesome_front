@@ -14,6 +14,7 @@ function AuthRoutes() {
       <Route path="/folders/:parentFolder" element={<HomePage/>}/>
       <Route path="/favorites" element={<FavoritesPage/>}/>
       <Route path="/deleteds" element={<DeletedsPage/>}/>
+      <Route path="/categories/:categoryId" element={<HomePage/>}/>
       <Route path="/" element={<HomePage/>}/>
     </Routes>
   )

@@ -1,42 +1,63 @@
 import { useEffect, useState } from "react";
 import { json, useNavigate, useParams } from "react-router-dom";
 import { Button, Page } from "../components/base";
+import { CategoryModal } from "../components/categories/CategoryModal";
 import { FolderList } from "../components/foldels/FolderList";
 import { FolderModal } from "../components/foldels/FolderModal";
 import { NoteList } from "../components/notes/NoteList";
 import { NoteModal } from "../components/notes/NoteModal";
+import { getCategoryById, patchCategory } from "../connections/categories.connection";
 import { getFolderById, getFolders, patchFolder, postFolder } from "../connections/folders.connection";
-import { getNotes, patchNote, postNote } from "../connections/notes.connection";
+import { getNotes, getNotesByCategory, patchNote, postNote } from "../connections/notes.connection";
 import { MainLayout } from "../layouts/MainLayout";
+import { Category } from "../types/category.type";
 import { Folder } from "../types/folder.type";
 import { Note } from "../types/note.type";
 
 export function HomePage() {
+  // Parámetros
+  const { parentFolder, categoryId } = useParams()
+
+  // Estados de carpetas
   const [folders, setFolders] = useState<Folder[]>([])
-  const [notes, setNotes] = useState<Note[]>([])
-  const { parentFolder } = useParams()
   const [currentFolder, setCurrentFolder] = useState<Folder | undefined>(undefined)
-  const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [selectedFolder, setSelectedFolder] = useState(false)
-  const [creatingNote, setCreatingNote] = useState(false)
   const [creatingFolder, setCreatingFolder] = useState(false)
+
+  // Estados de notas
+  const [notes, setNotes] = useState<Note[]>([])  
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null)
+  const [creatingNote, setCreatingNote] = useState(false)
+  
+  // Estados de categorias
+  const [currentCategory, setCurrentCategory] = useState<Category | undefined>(undefined)
+  const [editigCategory, setEditigCategory] = useState(false)
+
   const navigate = useNavigate()
 
   useEffect(() => {
     (async () => {
       const { data: foldersData, error: foldersError } = await getFolders(parentFolder)
-      const { data: notesData, error: notesError } = await getNotes(parentFolder)
+      const { data: notesData, error: notesError } = categoryId? await getNotesByCategory(categoryId): await getNotes(parentFolder)
       
       if (!foldersError) setFolders(foldersData!)
       if (!notesError) setNotes(notesData!)
+
       if (parentFolder) {
         const { data: folderData, error: folderError } = await getFolderById(parentFolder)
         if(!folderError && folderData) setCurrentFolder(folderData)
       } else {
         setCurrentFolder(undefined)
       }
+
+      if (categoryId) {
+        const { data: categoryData, error: categoryError } = await getCategoryById(categoryId)
+        if(!categoryError && categoryData) setCurrentCategory(categoryData)
+      } else {
+        setCurrentCategory(undefined)
+      }
     })()
-  }, [parentFolder])
+  }, [parentFolder, categoryId])
   
   async function onCreateFolder( folder: Partial<Folder>) {
 
@@ -75,27 +96,45 @@ export function HomePage() {
     return { error }
   }
 
-  // TODO: Guardar nota con título sin contenido
+  async function onUpdateCategory( category: Partial<Category>) {
+    if(!category.id) return { error: true }
+
+    const {data, error} = await patchCategory(category.id, category)
+
+    if(!error && data) setEditigCategory(false)
+    return { error }
+  }
+
   return (
     <MainLayout>
       <Page className="ma-lg">
         <div className="row items-center">
-          <div className="ma-sm text-grey text-h3">{currentFolder?.name || "Main Folder"} </div>
-          { currentFolder && <Button onClick={() => {setSelectedFolder(true)}}>Editar</Button> }
+          {categoryId? 
+            <>
+              <div className="ma-sm text-grey text-h3">{currentCategory?.name} </div>
+              { currentCategory && <Button onClick={() => {setEditigCategory(true)}}>Editar</Button> }
+            </>:
+            <>
+              <div className="ma-sm text-grey text-h3">{currentFolder?.name || "Main Folder"} </div>
+              { currentFolder && <Button onClick={() => {setSelectedFolder(true)}}>Editar</Button> }
+            </>
+          }  
         </div>
         <div>
         { currentFolder && <div>
           <Button flat={true} onClick={() => navigate("/")}>home</Button>
-          { currentFolder.url.map(elemnt => <Button flat={true} onClick={() => navigate(`/folders/${elemnt.id}`)}>/ {elemnt.name}</Button>) }
+          { currentFolder.url?.map(elemnt => <Button flat={true} onClick={() => navigate(`/folders/${elemnt.id}`)}>/ {elemnt.name}</Button>) }
         </div>}
         </div>
-        <div>
-          <div  className="row items-center">
-            <div className="ma-sm text-grey">Carpetas </div>
-            <Button onClick={() => {setCreatingFolder(true)}}>Agregar</Button>
+        {!categoryId && 
+          <div>
+            <div  className="row items-center">
+              <div className="ma-sm text-grey">Carpetas </div>
+              <Button onClick={() => {setCreatingFolder(true)}}>Agregar</Button>
+            </div>
+            <FolderList list={folders}/>
           </div>
-          <FolderList list={folders}/>
-        </div>
+        }
         <div className="mt-lg">
           <div  className="row items-center">
             <div className="ma-sm text-grey">Notas </div>
@@ -107,6 +146,7 @@ export function HomePage() {
         { creatingFolder && <FolderModal onClose={() => setCreatingFolder(false)} onSave={onCreateFolder} /> }
         { creatingNote && <NoteModal onClose={() => setCreatingNote(false)} onSave={onCreateNote} /> }
         { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }
+        { editigCategory && <CategoryModal category={currentCategory} onClose={() => setEditigCategory(false)} onSave={onUpdateCategory} /> }
       </Page>
     </MainLayout> 
   )

@@ -75,3 +75,17 @@ export async function deleteNote(noteId: number | string) {
     return {error}
   }
 }
+
+export async function getNotesByCategory(categoryId: number|string): Promise<{ data?: Note[], error?: any }> {
+
+  const url =  `notes/?categories=${categoryId}`
+
+  try {
+    const { data } = await connection.get<Note[]>(url)
+    
+    return { data }
+
+  } catch (error: any) {  
+    return {error}
+  } 
+}
