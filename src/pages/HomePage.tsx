@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { json, useNavigate, useParams } from "react-router-dom";
 import { Button, Page } from "../components/base";
 import { CategoryModal } from "../components/categories/CategoryModal";
@@ -13,6 +13,7 @@ import { MainLayout } from "../layouts/MainLayout";
 import { Category } from "../types/category.type";
 import { Folder } from "../types/folder.type";
 import { Note } from "../types/note.type";
+import CategoriesContext from "../context/categories.context";
 
 export function HomePage() {
   // Parámetros
@@ -32,6 +33,7 @@ export function HomePage() {
   // Estados de categorias
   const [currentCategory, setCurrentCategory] = useState<Category | undefined>(undefined)
   const [editigCategory, setEditigCategory] = useState(false)
+  const {categories, getAllCategories} = useContext(CategoriesContext);
 
   const navigate = useNavigate()
 
@@ -100,8 +102,13 @@ export function HomePage() {
     if(!category.id) return { error: true }
 
     const {data, error} = await patchCategory(category.id, category)
+    
 
-    if(!error && data) setEditigCategory(false)
+    if(!error && data){
+      getAllCategories()
+      setEditigCategory(false)
+      setCurrentCategory(data)
+    } 
     return { error }
   }
 
