@@ -14,6 +14,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
 
   const [title, setTitle] = useState(note?.title || "")
   const [content, setContent] = useState(note?.content || "")
+  const [categories, setCategories] = useState(note?.categories || [])
   const [favorite, setFavorite] = useState(note?.isFavorite)
   const [selectingColor, setSelectingColor] = useState(false)
   const [color, setColor] = useState(note?.color)
@@ -36,7 +37,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
   async function save(updates: Partial<Note>) {
     const { error } = await onSave({id: note?.id, ...updates})
 
-    if (error) setError("Ocurrió un error al eliminar la nota")
+    if (error) setError("Ocurrió un error al guardar la nota")
   }
 
   return (
@@ -47,6 +48,9 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
           <div className="bb-primary pa-md row justify-between items-center">
             <Input value={title} flat={true} onChange={setTitle} className="text-body1"/>
             <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
+          </div>
+          <div className="pa-md row justify-between items-center">
+            {categories.map(category => <div key={category.id}>{category.name}</div>)} 
           </div>
           <div className="pa-md grow-1">
             <Input value={content} flat={true} onChange={setContent} className="text-body1"/>

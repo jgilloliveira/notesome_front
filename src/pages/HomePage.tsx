@@ -12,7 +12,7 @@ import { getNotes, getNotesByCategory, patchNote, postNote } from "../connection
 import { MainLayout } from "../layouts/MainLayout";
 import { Category } from "../types/category.type";
 import { Folder } from "../types/folder.type";
-import { Note } from "../types/note.type";
+import { Note, SerializedNote } from "../types/note.type";
 import CategoriesContext from "../context/categories.context";
 
 export function HomePage() {
@@ -145,7 +145,7 @@ export function HomePage() {
         <div className="mt-lg">
           <div  className="row items-center">
             <div className="ma-sm text-grey">Notas </div>
-            <Button onClick={() => {setCreatingNote(true)}}>Agregar</Button>
+            {!categoryId && <Button onClick={() => {setCreatingNote(true)}}>Agregar</Button>}
           </div>
           <NoteList list={notes} onSelect={setSelectedNote}/>
         </div>
