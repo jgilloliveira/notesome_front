@@ -35,6 +35,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
   }
 
   async function save(updates: Partial<Note>) {
+
     const { error } = await onSave({id: note?.id, ...updates})
 
     if (error) setError("Ocurrió un error al guardar la nota")
@@ -49,8 +50,9 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
             <Input value={title} flat={true} onChange={setTitle} className="text-body1"/>
             <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
           </div>
-          <div className="pa-md row justify-between items-center">
-            {categories.map(category => <div key={category.id}>{category.name}</div>)} 
+          <div className="pa-md row items-center gap-sm">
+            {categories.map(category => <div className="pa-sm bo-primary rounded-border-sm" key={category.id}>{category.name}</div>)} 
+            <Button className="ma-md" flat={true} >+</Button>
           </div>
           <div className="pa-md grow-1">
             <Input value={content} flat={true} onChange={setContent} className="text-body1"/>
@@ -63,7 +65,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
               flat={true}
               onClick={() => {
                 setFavorite(!favorite)
-                save({isFavorite:!favorite})
+                if(note) save({isFavorite:!favorite})
               }}
             >
               {favorite? "★":"☆"}
@@ -74,7 +76,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
         <ColorPicker onClick={(newColor) => {
           setSelectingColor(false)
           setColor(newColor)
-          save({color:newColor})
+          if(note) save({color:newColor})
         }}/>
       }
       { error && <div className="text-red">{error}</div>}
