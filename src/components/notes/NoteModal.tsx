@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { patchNote } from "../../connections/notes.connection";
+import CategoriesContext from "../../context/categories.context";
 import { Note } from "../../types/note.type";
 import { Button, Input } from "../base";
 import { ColorPicker } from "../base/ColorPicker";
@@ -15,6 +16,8 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
   const [title, setTitle] = useState(note?.title || "")
   const [content, setContent] = useState(note?.content || "")
   const [categories, setCategories] = useState(note?.categories || [])
+  const {categories: allCategories, getAllCategories} = useContext(CategoriesContext);
+  const [openCategoryMenu, setOpenCategoryMenu] = useState(false)
   const [favorite, setFavorite] = useState(note?.isFavorite)
   const [selectingColor, setSelectingColor] = useState(false)
   const [color, setColor] = useState(note?.color)
@@ -43,7 +46,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
 
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
-      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "280px", height: "200px", backgroundColor: color || "#FFF"}}>
+      <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "340px", height: "280px", backgroundColor: color || "#FFF"}}>
       {!selectingColor?
         <>
           <div className="bb-primary pa-md row justify-between items-center">
@@ -52,7 +55,21 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
           </div>
           <div className="pa-md row items-center gap-sm">
             {categories.map(category => <div className="pa-sm bo-primary rounded-border-sm" key={category.id}>{category.name}</div>)} 
-            <Button className="ma-md" flat={true} >+</Button>
+            <div className="relative">
+              <Button className="ml-md" flat={true} onClick={()=>{setOpenCategoryMenu(!openCategoryMenu)}}>+</Button>
+              { 
+                openCategoryMenu &&
+                <div className="bg-white absolute bo-primary"
+                  style={{
+                    width: "100px",
+                    left: "0px",
+                    top:"100%"
+                  }}>
+                    {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button flat={true}>{category.name}</Button>)}
+                    
+                </div>
+              }
+            </div>
           </div>
           <div className="pa-md grow-1">
             <Input value={content} flat={true} onChange={setContent} className="text-body1"/>
