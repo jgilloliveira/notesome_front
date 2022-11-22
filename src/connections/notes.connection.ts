@@ -43,13 +43,13 @@ export async function getDeletedNotes(): Promise<{ data?: Note[], error?: any }>
   } 
 }
 
-export async function patchNote( noteId: number, note: Partial<Note>) {
+export async function patchNote( noteId: number|string, note: Partial<Note>) {
   
   const url = `notes/${noteId}/`
 
   const categories = note.categories?.map(category => category.id)
 
-  const serializedNotes: Partial<SerializedNote> = {...note, categories}
+  const serializedNotes = {...note, newCategories: categories}
 
   
   try {

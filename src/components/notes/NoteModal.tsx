@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { patchNote } from "../../connections/notes.connection";
 import CategoriesContext from "../../context/categories.context";
+import { Category } from "../../types/category.type";
 import { Note } from "../../types/note.type";
 import { Button, Input } from "../base";
 import { ColorPicker } from "../base/ColorPicker";
@@ -44,6 +45,16 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
     if (error) setError("Ocurrió un error al guardar la nota")
   }
 
+  async function handleAddCategory(category: Category) {
+    if(!note?.id) return { error: true }
+    const { data, error } = await patchNote(note?.id, {categories: [...categories, category]})
+
+    if(!error && data) setCategories(data?.categories)
+    else if (error) setError("Ocurrió un error al agregar una categoría")
+
+    setOpenCategoryMenu(false)
+  }
+
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
       <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "340px", height: "280px", backgroundColor: color || "#FFF"}}>
@@ -65,7 +76,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
                     left: "0px",
                     top:"100%"
                   }}>
-                    {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button flat={true}>{category.name}</Button>)}
+                    {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button key={category.id} flat={true} onClick={() => handleAddCategory(category)}>{category.name}</Button>)}
                     
                 </div>
               }
