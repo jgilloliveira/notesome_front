@@ -55,6 +55,18 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
     setOpenCategoryMenu(false)
   }
 
+  async function handleDeleteCategory(category: Category) {
+    if(!note?.id) return { error: true }
+
+    const newNoteCategories = categories.filter(c => c.id!==category.id)
+    const { data, error } = await patchNote(note?.id, {categories: newNoteCategories})
+
+    if(!error && data) setCategories(data?.categories)
+    else if (error) setError("Ocurrió un error al agregar una categoría")
+
+    setOpenCategoryMenu(false)
+  }
+
   return (
     <div className="full-screen bg-primary absolute flex flex-center" onClick={onClose} style={{top: 0, left: 0, backgroundColor: "#0008"}}>
       <div className="bg-white pa-md column" onClick={(event) => event.stopPropagation()} style={{ width: "340px", height: "280px", backgroundColor: color || "#FFF"}}>
@@ -65,9 +77,8 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
             <Button flat={true} onClick={onClose} className="bg-transparent">X</Button>
           </div>
           <div className="pa-md row items-center gap-sm">
-            {categories.map(category => <div className="pa-sm bo-primary rounded-border-sm" key={category.id}>{category.name}</div>)} 
             <div className="relative">
-              <Button className="ml-md" flat={true} onClick={()=>{setOpenCategoryMenu(!openCategoryMenu)}}>+</Button>
+              <Button className="mr-md" flat={true} onClick={()=>{setOpenCategoryMenu(!openCategoryMenu)}}>+</Button>
               { 
                 openCategoryMenu &&
                 <div className="bg-white absolute bo-primary"
@@ -77,9 +88,16 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
                     top:"100%"
                   }}>
                     {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button key={category.id} flat={true} onClick={() => handleAddCategory(category)}>{category.name}</Button>)}
-                    
                 </div>
               }
+            </div>
+            <div className="row scroll-x gap-sm">
+              {categories.map(category => 
+                <div className="pa-sm bo-primary rounded-border-sm row items-center" key={category.id}>
+                  {category.name}
+                  <Button flat={true} onClick={()=>{handleDeleteCategory(category)}} className="bg-transparent">X</Button>
+                </div>
+              )} 
             </div>
           </div>
           <div className="pa-md grow-1">
