@@ -6,7 +6,7 @@ import { FolderList } from "../components/foldels/FolderList";
 import { FolderModal } from "../components/foldels/FolderModal";
 import { NoteList } from "../components/notes/NoteList";
 import { NoteModal } from "../components/notes/NoteModal";
-import { getCategoryById, patchCategory } from "../connections/categories.connection";
+import { deleteCategory, getCategoryById, patchCategory, postCategory } from "../connections/categories.connection";
 import { getFolderById, getFolders, patchFolder, postFolder } from "../connections/folders.connection";
 import { getNotes, getNotesByCategory, patchNote, postNote } from "../connections/notes.connection";
 import { MainLayout } from "../layouts/MainLayout";
@@ -33,7 +33,7 @@ export function HomePage() {
   // Estados de categorias
   const [currentCategory, setCurrentCategory] = useState<Category | undefined>(undefined)
   const [editigCategory, setEditigCategory] = useState(false)
-  const {categories, getAllCategories} = useContext(CategoriesContext);
+  const {categories, getAllCategories, openCategoryModal, setOpenCategoryModal} = useContext(CategoriesContext);
 
   const navigate = useNavigate()
 
@@ -112,6 +112,31 @@ export function HomePage() {
     return { error }
   }
 
+  async function onCreateCategory( category: Partial<Category>) {
+
+    const {data, error} = await postCategory(category)
+    
+
+    if(!error && data){
+      getAllCategories()
+      setOpenCategoryModal(false)
+    } 
+    return { error }
+  }
+
+  async function onDeleteCategory() {
+
+    if(!currentCategory?.id) return { error: true }
+    const {error} = await deleteCategory(currentCategory?.id)
+    
+
+    if(!error){
+      getAllCategories()
+      navigate('/')
+    } 
+    return { error }
+  }
+
   return (
     <MainLayout>
       <Page className="ma-lg">
@@ -119,7 +144,12 @@ export function HomePage() {
           {categoryId? 
             <>
               <div className="ma-sm text-grey text-h3">{currentCategory?.name} </div>
-              { currentCategory && <Button onClick={() => {setEditigCategory(true)}}>Editar</Button> }
+              { currentCategory && 
+                <>
+                  <Button onClick={() => {setEditigCategory(true)}}>Editar</Button>
+                  <Button flat={true} className="bg-red text-white ml-sm" onClick={onDeleteCategory}>Eliminar</Button>
+                </>
+              }
             </>:
             <>
               <div className="ma-sm text-grey text-h3">{currentFolder?.name || "Main Folder"} </div>
@@ -154,6 +184,7 @@ export function HomePage() {
         { creatingNote && <NoteModal onClose={() => setCreatingNote(false)} onSave={onCreateNote} /> }
         { selectedNote && <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onSave={onUpdateNote} /> }
         { editigCategory && <CategoryModal category={currentCategory} onClose={() => setEditigCategory(false)} onSave={onUpdateCategory} /> }
+        { openCategoryModal && <CategoryModal onClose={() => setOpenCategoryModal(false)} onSave={onCreateCategory} /> }
       </Page>
     </MainLayout> 
   )

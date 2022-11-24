@@ -87,7 +87,7 @@ export function NoteModal({note, onClose, onSave}: NoteModalProps) {
                     left: "0px",
                     top:"100%"
                   }}>
-                    {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button key={category.id} flat={true} onClick={() => handleAddCategory(category)}>{category.name}</Button>)}
+                    {allCategories.filter(category => !categories.some(c => category.id===c.id)).map(category => <Button key={category.id} flat={true} className='bg-transparent' onClick={() => handleAddCategory(category)}>{category.name}</Button>)}
                 </div>
               }
             </div>
